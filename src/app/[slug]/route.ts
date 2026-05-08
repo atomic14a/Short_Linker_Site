@@ -51,7 +51,7 @@ export async function GET(
     const title = link.meta_title || link.internal_name || "LinkFocus";
     const description = link.meta_description || "";
     const imageUrl = link.meta_image_url || "";
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://short-linker-site.vercel.app";
+    const baseUrl = (process.env.NEXT_PUBLIC_APP_URL || "https://short-linker-site.vercel.app").replace(/\/+$/, "");
     const canonicalUrl = `${baseUrl}/${slug}`;
 
     const html = `<!DOCTYPE html>
