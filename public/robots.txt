@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /dashboard/
-Disallow: /auth/
-Disallow: /api/
+
+User-agent: facebookexternalhit
+Allow: /
 
 Sitemap: https://short-linker-site.vercel.app/sitemap.xml
