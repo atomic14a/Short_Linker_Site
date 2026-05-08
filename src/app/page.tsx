@@ -32,7 +32,7 @@ export default function LandingPage() {
             </div>
             <div className="flex flex-col">
               <span className="text-lg font-bold text-white leading-tight">LinkFocus</span>
-              <span className="text-[10px] text-white/40 leading-tight -mt-0.5">by Novatix Solution</span>
+              <span className="text-[10px] text-white/40 leading-tight -mt-0.5">Smart Link Management</span>
             </div>
           </Link>
           <nav className="hidden md:flex items-center gap-8">
@@ -99,7 +99,7 @@ export default function LandingPage() {
                   <div className="w-3 h-3 rounded-full bg-green-500/60" />
                 </div>
                 <div className="flex-1 mx-4 h-8 rounded-lg bg-white/5 border border-white/[0.06] flex items-center px-3">
-                  <span className="text-xs text-white/30 font-mono">linkfocus.app/your-custom-slug</span>
+                  <span className="text-xs text-white/30 font-mono">short-linker-site.vercel.app/my-link</span>
                 </div>
               </div>
               
@@ -351,10 +351,9 @@ export default function LandingPage() {
               <Link2 className="w-4 h-4 text-white" />
             </div>
             <span className="text-sm font-semibold text-white/80">LinkFocus</span>
-            <span className="text-xs text-white/30">by Novatix Solution</span>
           </div>
           <p className="text-xs text-white/30">
-            © {new Date().getFullYear()} LinkFocus by Novatix Solution. All rights reserved.
+            © {new Date().getFullYear()} LinkFocus. All rights reserved.
           </p>
         </div>
       </footer>

@@ -14,11 +14,11 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LinkFocus — Smart URL Management by Novatix Solution",
+  title: "LinkFocus — Smart URL Management",
   description:
     "Create shortened links with fully customizable Open Graph metadata for social media optimization, integrated with real-time traffic analytics.",
   openGraph: {
-    title: "LinkFocus by Novatix Solution",
+    title: "LinkFocus URL Shortener",
     description: "Professional URL Management Platform with Custom OG Tags & Analytics",
     type: "website",
   },
