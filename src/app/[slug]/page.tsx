@@ -20,50 +20,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
   
-  console.log(`[Metadata] Scraping link for slug: ${slug}`);
-
-  try {
-    const supabase = await createClient();
-    const { data: link, error } = await supabase
-      .from("links")
-      .select("*")
-      .eq("short_slug", slug)
-      .single();
-
-    if (error || !link) {
-      console.warn(`[Metadata] Link not found or Supabase error for slug: ${slug}`, error);
-      return { title: "Link Not Found" };
+  return {
+    title: "Redirecting... | LinkFocus",
+    description: "You are being redirected to your destination.",
+    openGraph: {
+      title: "LinkFocus Redirect",
+      description: "You are being redirected...",
+      type: "website",
     }
-
-    const title = link.meta_title || link.internal_name || "LinkFocus Redirect";
-    const description = link.meta_description || "You are being redirected...";
-    const imageUrl = link.meta_image_url || "";
-    // Fallback to a default if NEXT_PUBLIC_APP_URL is missing
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://shortlink.novatixdigi.online";
-    const url = `${baseUrl}/${slug}`;
-
-    return {
-      title,
-      description,
-      openGraph: {
-        title,
-        description,
-        url,
-        siteName: "LinkFocus",
-        type: "website",
-        images: imageUrl ? [{ url: imageUrl, width: 1200, height: 630 }] : [],
-      },
-      twitter: {
-        card: imageUrl ? "summary_large_image" : "summary",
-        title,
-        description,
-        images: imageUrl ? [imageUrl] : [],
-      },
-    };
-  } catch (err) {
-    console.error(`[Metadata] Critical error in generateMetadata for slug: ${slug}`, err);
-    return { title: "LinkFocus" };
-  }
+  };
 }
 
 // Main page component for the redirect
