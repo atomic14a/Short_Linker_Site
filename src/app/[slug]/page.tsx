@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const title = link.meta_title || link.internal_name || "LinkFocus Redirect";
   const description = link.meta_description || "You are being redirected...";
   const imageUrl = link.meta_image_url || "";
+  const url = `${process.env.NEXT_PUBLIC_APP_URL}/${slug}`;
 
   return {
     title,
@@ -41,7 +42,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title,
       description,
-      images: imageUrl ? [{ url: imageUrl }] : [],
+      url,
+      siteName: "LinkFocus",
+      type: "website",
+      images: imageUrl ? [{ url: imageUrl, width: 1200, height: 630 }] : [],
     },
     twitter: {
       card: imageUrl ? "summary_large_image" : "summary",
@@ -94,20 +98,16 @@ export default async function SlugRedirectPage({ params }: { params: Promise<{ s
      if(error) console.error("Error logging click:", error);
   });
 
-  // Execute client-side redirect immediately.
-  // Using a meta refresh as a reliable fallback, plus JS redirect.
+  // Execute client-side redirect.
+  // We use a script for immediate redirect and a meta refresh in the body for fallback.
   return (
-    <html>
-      <head>
-        <meta httpEquiv="refresh" content={`0;url=${link.original_url}`} />
-      </head>
-      <body className="bg-[#050510] text-white flex items-center justify-center min-h-screen font-sans">
-        <div className="text-center animate-pulse">
-          <div className="w-12 h-12 rounded-full border-4 border-teal-500/30 border-t-teal-400 animate-spin mx-auto mb-4" />
-          <p className="text-white/60">Redirecting to destination...</p>
-          <script dangerouslySetInnerHTML={{ __html: `window.location.replace("${link.original_url}");` }} />
-        </div>
-      </body>
-    </html>
+    <div className="bg-[#050510] text-white flex items-center justify-center min-h-screen font-sans">
+      <meta httpEquiv="refresh" content={`0;url=${link.original_url}`} />
+      <div className="text-center animate-pulse">
+        <div className="w-12 h-12 rounded-full border-4 border-teal-500/30 border-t-teal-400 animate-spin mx-auto mb-4" />
+        <p className="text-white/60">Redirecting to destination...</p>
+        <script dangerouslySetInnerHTML={{ __html: `window.location.replace("${link.original_url}");` }} />
+      </div>
+    </div>
   );
 }
