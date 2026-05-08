@@ -1,10 +1,7 @@
 User-agent: *
 Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: Facebot
-Allow: /
+Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /api/
 
 Sitemap: https://short-linker-site.vercel.app/sitemap.xml

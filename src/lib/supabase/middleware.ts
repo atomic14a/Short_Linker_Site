@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
   const userAgent = request.headers.get('user-agent') || ''
-  const isCrawler = /facebookexternalhit|Facebot|WhatsApp|Twitterbot|LinkedInBot|TelegramBot|discordapp\.com/i.test(userAgent)
+  const isCrawler = /facebookexternalhit|Facebot|WhatsApp|Twitterbot|LinkedInBot|TelegramBot|Slackbot|Discord|Googlebot|bingbot|Pinterestbot|redditbot|applebot/i.test(userAgent)
 
   // If it's a crawler, just return Next() immediately to ensure Meta Tags are served without 403/auth issues
   if (isCrawler) {
