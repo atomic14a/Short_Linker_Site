@@ -20,15 +20,47 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
   
-  return {
-    title: "Redirecting... | LinkFocus",
-    description: "You are being redirected to your destination.",
-    openGraph: {
-      title: "LinkFocus Redirect",
-      description: "You are being redirected...",
-      type: "website",
+  try {
+    const supabase = await createClient();
+    const { data: link, error } = await supabase
+      .from("links")
+      .select("*")
+      .eq("short_slug", slug)
+      .single();
+
+    if (error || !link) {
+      return { title: "Link Not Found" };
     }
-  };
+
+    const title = link.meta_title || link.internal_name || "LinkFocus Redirect";
+    const description = link.meta_description || "You are being redirected...";
+    const imageUrl = link.meta_image_url || "";
+    // Use the environment variable for the base URL
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+    const url = baseUrl ? `${baseUrl}/${slug}` : "";
+
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        url,
+        siteName: "LinkFocus",
+        type: "website",
+        images: imageUrl ? [{ url: imageUrl, width: 1200, height: 630 }] : [],
+      },
+      twitter: {
+        card: imageUrl ? "summary_large_image" : "summary",
+        title,
+        description,
+        images: imageUrl ? [imageUrl] : [],
+      },
+    };
+  } catch (err) {
+    console.error(`[Metadata Error] ${err}`);
+    return { title: "LinkFocus Redirect" };
+  }
 }
 
 // Main page component for the redirect
