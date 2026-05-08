@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const userAgent = request.headers.get('user-agent') || ''
   // Immediate crawler bypass to prevent any auth/session logic from interfering with social crawlers
   const isCrawler = /facebookexternalhit|Facebot|WhatsApp|Twitterbot|LinkedInBot|TelegramBot|Slackbot|Discord|Googlebot|bingbot|Pinterestbot|redditbot|applebot/i.test(userAgent)
