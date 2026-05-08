@@ -3,13 +3,17 @@ import { updateSession } from '@/lib/supabase/middleware'
 
 export async function proxy(request: NextRequest) {
   const userAgent = request.headers.get('user-agent') || ''
+  const path = request.nextUrl.pathname
+  
   // Immediate crawler bypass to prevent any auth/session logic from interfering with social crawlers
   const isCrawler = /facebookexternalhit|Facebot|WhatsApp|Twitterbot|LinkedInBot|TelegramBot|Slackbot|Discord|Googlebot|bingbot|Pinterestbot|redditbot|applebot/i.test(userAgent)
   
   if (isCrawler) {
+    console.log(`[proxy] CRAWLER DETECTED: ${userAgent} for ${path}`);
     return NextResponse.next()
   }
 
+  console.log(`[proxy] NORMAL USER: ${userAgent} for ${path}`);
   return await updateSession(request)
 }
 

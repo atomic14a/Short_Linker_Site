@@ -98,6 +98,13 @@ export default async function SlugPage({ params }: PageProps) {
   const headerList = await headers();
   const userAgent = headerList.get("user-agent") || "";
 
+  // LOGGING FOR DEBUGGING 403 ERRORS
+  console.log(`[slug] Request for /${slug}`);
+  console.log(`[slug] User-Agent: ${userAgent}`);
+  console.log(`[slug] Referer: ${headerList.get("referer") || "none"}`);
+  console.log(`[slug] X-Forwarded-For: ${headerList.get("x-forwarded-for") || "none"}`);
+  console.log(`[slug] Vercel-IP-Country: ${headerList.get("x-vercel-ip-country") || "none"}`);
+
   // Fetch the link
   const { data: link, error } = await supabase
     .from("links")
